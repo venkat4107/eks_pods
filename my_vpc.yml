@@ -59,7 +59,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub $ENV Public Subnet AZ1
+          Value: !Sub ${ENV} Public Subnet AZ1
   
   PublicAZ2Subnet:
     Type: AWS::EC2::Subnet
@@ -70,7 +70,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub $ENV Public Subnet AZ2
+          Value: !Sub ${ENV} Public Subnet AZ2
 
   PrivateAZ1Subnet:
     Type: AWS::EC2::Subnet
@@ -81,7 +81,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub $ENV Private Subnet AZ1
+          Value: !Sub ${ENV} Private Subnet AZ1
   
   PrivateAZ2Subnet:
     Type: AWS::EC2::Subnet
@@ -92,7 +92,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub $ENV Private Subnet AZ2
+          Value: !Sub ${ENV} Private Subnet AZ2
   
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -100,7 +100,7 @@ Resources:
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
-          Value: !Sub $ENV Public routes
+          Value: !Sub ${ENV} Public routes
 
   PublicSubnetsRoute:
     Type: AWS::EC2::Route
