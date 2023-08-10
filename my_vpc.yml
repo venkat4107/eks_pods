@@ -3,7 +3,7 @@ Description: This Template for creating VPC and long with private and public sub
 Parameters:
   ENV:
     Description: An environment name
-    type: String
+    Type: String
 
   VpcCIDR:
     Type: String
