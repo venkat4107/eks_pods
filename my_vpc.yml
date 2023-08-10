@@ -1,6 +1,6 @@
+---
 Description: This Template for creating VPC and long with private and public subnet
-
-Parametes:
+Parameters:
   ENV:
     Description: An environment name
     type: String
