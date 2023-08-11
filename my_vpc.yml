@@ -149,7 +149,7 @@ Resources:
         - Key: Name
           Value: !Sub ${ENV} Private routes
 
-  PublicSubnetsRoute:
+  PrivateSubnetsRoute:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PrivateRouteTable
