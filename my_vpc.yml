@@ -159,13 +159,13 @@ Resources:
   PrivateAZ1SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PrivateSubnet
+      SubnetId: !Ref PrivateA1Subnet
       RouteTableId: !Ref PrivateRouteTable
 
   PrivateAZ2SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PrivateSubnet
+      SubnetId: !Ref PrivateAZ2Subnet
       RouteTableId: !Ref PrivateRouteTable                   
   
 Outputs:
