@@ -94,7 +94,7 @@ Resources:
         - Key: Name
           Value: !Sub ${ENV} Private Subnet AZ2
   
-  defaultRouteTable:
+  PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref Vpc
@@ -105,23 +105,29 @@ Resources:
   PublicSubnetsRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref defaultRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref InternetGateway
 
   PublicAZ1SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicAZ1Subnet
-      RouteTableId: !Ref defaultRouteTable
+      RouteTableId: !Ref PublicRouteTable
 
   PublicAZ2SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicAZ2Subnet
-      RouteTableId: !Ref defaultRouteTable
+      RouteTableId: !Ref PublicRouteTable
 
-  
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${ENV} Public routes
   
   NATGateway:
     Type: AWS::EC2::NatGateway
@@ -136,21 +142,21 @@ Resources:
   PrivateSubnetsRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref defaultRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref NATGateway
 
   PrivateAZ1SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref  PrivateAZ1Subnet
-      RouteTableId: !Ref defaultRouteTable
+      RouteTableId: !Ref PrivateRouteTable
 
   PrivateAZ2SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref  PrivateAZ2Subnet
-      RouteTableId: !Ref defaultRouteTable                   
+      RouteTableId: !Ref PrivateRouteTable                   
   
 Outputs:
   VpcId:
