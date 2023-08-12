@@ -94,7 +94,7 @@ Resources:
         - Key: Name
           Value: !Sub ${ENV} Private Subnet AZ2
   
-  PublicRouteTable:
+  defaultRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref Vpc
@@ -105,7 +105,7 @@ Resources:
   PublicSubnetsRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref PublicRouteTable
+      RouteTableId: !Ref defaultRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
 
@@ -133,18 +133,10 @@ Resources:
     Properties:
       Domain: vpc
 
-  PrivateRouteTable:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref Vpc
-      Tags:
-        - Key: Name
-          Value: !Sub ${ENV} Private routes
-
   PrivateSubnetsRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref PrivateRouteTable
+      RouteTableId: !Ref defaultRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref NATGateway
 
