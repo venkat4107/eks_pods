@@ -113,13 +113,13 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicAZ1Subnet
-      RouteTableId: !Ref PublicRouteTable
+      RouteTableId: !Ref defaultRouteTable
 
   PublicAZ2SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicAZ2Subnet
-      RouteTableId: !Ref PublicRouteTable
+      RouteTableId: !Ref defaultRouteTable
 
   
   
@@ -144,13 +144,13 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref  PrivateAZ1Subnet
-      RouteTableId: !Ref PrivateRouteTable
+      RouteTableId: !Ref defaultRouteTable
 
   PrivateAZ2SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref  PrivateAZ2Subnet
-      RouteTableId: !Ref PrivateRouteTable                   
+      RouteTableId: !Ref defaultRouteTable                   
   
 Outputs:
   VpcId:
