@@ -47,7 +47,7 @@ Resources:
   VPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties: 
-      InternetGatewayId: !Ref InternetGateway
+      InternetGatewayId: !Ref InternetGateway 
       VpcId: !Ref Vpc
   
   PublicAZ1Subnet:
@@ -127,7 +127,7 @@ Resources:
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
-          Value: !Sub ${ENV} Public routes
+          Value: !Sub ${ENV} Private routes
   
   NATGateway:
     Type: AWS::EC2::NatGateway
@@ -145,6 +145,7 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref NATGateway
+    DependsOn: VPCGatewayAttachment  
 
   PrivateAZ1SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
