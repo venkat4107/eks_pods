@@ -140,13 +140,13 @@ Resources:
         - Key: Name
           Value: !Sub ${ENV} Private routes   
 
-  PrivateSubnetsRoute:
+  RouteNATGateway:
+    DependsOn: NATGateway
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref PrivateRouteTable
-      DestinationCidrBlock: '0.0.0.0/0'
-      GatewayId: !Ref NATGateway
-    DependsOn: VPCGatewayAttachment  
+       RouteTableId: !Ref PrivateRouteTable
+       DestinationCidrBlock: '0.0.0.0/0'
+       NatGatewayId: !Ref NATGateway  
 
   PrivateAZ1SubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
