@@ -121,14 +121,6 @@ Resources:
       SubnetId: !Ref PublicAZ2Subnet
       RouteTableId: !Ref PublicRouteTable
 
-  PrivateRouteTable:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref Vpc
-      Tags:
-        - Key: Name
-          Value: !Sub ${ENV} Private routes
-  
   NATGateway:
     Type: AWS::EC2::NatGateway
     Properties:
@@ -138,7 +130,15 @@ Resources:
     Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
-    DependsOn: VPCGatewayAttachment  
+    DependsOn: VPCGatewayAttachment 
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${ENV} Private routes   
 
   PrivateSubnetsRoute:
     Type: AWS::EC2::Route
