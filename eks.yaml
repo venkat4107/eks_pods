@@ -1,0 +1,20 @@
+Resources:
+  EKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: test
+      Version: "1.26"
+      RoleArn: "arn:aws:iam::484537997968:role/eks-cluster"
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - sg-0f92664c0b831606e
+        SubnetIds:
+          - subnet-0fd66e1ca42affd13
+          - subnet-09f73f1bb509444d0
+        EndpointPublicAccess: true
+        EndpointPrivateAccess: true
+      Logging:
+        ClusterLogging:
+          EnabledTypes:
+            - Type: api
+            - Type: audit
