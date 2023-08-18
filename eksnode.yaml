@@ -9,7 +9,7 @@ Resources:
         DesiredSize: 2
         MaxSize: 3  
       Subnets:
-        - subnet-0fd66e1ca42affd13
-        - subnet-09f73f1bb509444d0
+        - subnet-0be0a525c28f4a3c1
+        - subnet-0c86a0865fcea224d
       InstanceTypes: 
         - t2.micro

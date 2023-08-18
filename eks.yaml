@@ -7,30 +7,14 @@ Resources:
       RoleArn: "arn:aws:iam::484537997968:role/eks-cluster"
       ResourcesVpcConfig:
         SecurityGroupIds:
-          - sg-0f92664c0b831606e
+          - sg-0eb32b5ea5b415c6b
         SubnetIds:
-          - subnet-0fd66e1ca42affd13
-          - subnet-09f73f1bb509444d0
+          - subnet-0be0a525c28f4a3c1
+          - subnet-0c86a0865fcea224d
         EndpointPublicAccess: true
         EndpointPrivateAccess: true
       Logging:
         ClusterLogging:
           EnabledTypes:
             - Type: api
-            - Type: audit
-
-  EKSNodegroup:
-    Type: 'AWS::EKS::Nodegroup'
-    Properties:
-      ClusterName: test
-      NodeRole: 'arn:aws:iam::484537997968:role/eksnode_role'
-      ScalingConfig:
-        MinSize: 1
-        DesiredSize: 2
-        MaxSize: 3
-      AmiType: ami-08a52ddb321b32a8c  
-      Subnets:
-        - subnet-0fd66e1ca42affd13
-        - subnet-09f73f1bb509444d0
-      InstanceTypes: 
-        - t2.micro          
+            - Type: audit      
