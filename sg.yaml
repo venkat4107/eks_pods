@@ -4,14 +4,14 @@ Resources:
    Type: AWS::EC2::SecurityGroup
    Properties:
      GroupDescription: Allow http to client host
-     VpcId: vpc-0cafdc7294b3ee274
+     VpcId: vpc-0c8e9966c66d73040
      SecurityGroupIngress:
        - IpProtocol: tcp
-         FromPort: 0
-         ToPort: 1000
+         FromPort: 22
+         ToPort: 100
          CidrIp: 0.0.0.0/0
      SecurityGroupEgress:
-       - IpProtocol: tcp
-         FromPort: 0
-         ToPort: 1000
+       - IpProtocol: -1
+         FromPort: -1
+         ToPort: -1
          CidrIp: 0.0.0.0/0
