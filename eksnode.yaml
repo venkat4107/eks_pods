@@ -9,7 +9,11 @@ Resources:
         DesiredSize: 2
         MaxSize: 3  
       Subnets:
-        - subnet-0be0a525c28f4a3c1
-        - subnet-0c86a0865fcea224d
+        - subnet-098b1454683bddabc
+        - subnet-089b07c2d1da2849f
       InstanceTypes: 
         - t2.micro
+      RemoteAccess: 
+        Ec2SshKey: key
+        SourceSecurityGroups: 
+          -  sg-0a2a9cc51731429dd

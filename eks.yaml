@@ -7,14 +7,14 @@ Resources:
       RoleArn: "arn:aws:iam::484537997968:role/eks-cluster"
       ResourcesVpcConfig:
         SecurityGroupIds:
-          - sg-0eb32b5ea5b415c6b
+          - sg-0b86ec844cc577f57
         SubnetIds:
-          - subnet-0be0a525c28f4a3c1
-          - subnet-0c86a0865fcea224d
+          - subnet-098b1454683bddabc
+          - subnet-089b07c2d1da2849f
         EndpointPublicAccess: true
         EndpointPrivateAccess: true
       Logging:
         ClusterLogging:
           EnabledTypes:
             - Type: api
-            - Type: audit      
+            - Type: audit     
