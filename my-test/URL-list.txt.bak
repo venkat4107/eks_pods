@@ -1,0 +1,459 @@
+https://bakerhughes-my.sharepoint.com/personal/nishant_shrivastava_bakerhughes_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fnishant%5Fshrivastava%5Fbakerhughes%5Fcom%2FDocuments%2FRecordings&OR=Teams%2DHL&CT=1641973122452¶ms=%7B%22AppName%22%3A%22Teams%2DDesktop%22%2C%22AppVersion%22%3A%2227%2F21110108719%22%7D
+
+https://bakerhughes-my.sharepoint.com/personal/venkataramana_gurram_bakerhughes_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fvenkataramana%5Fgurram%5Fbakerhughes%5Fcom%2FDocuments%2FRecordings
+
+https://github.com/bh-ent-tech/ss_kubernetes_deployment/blob/Master/DEV/NGINX-dev/nginx-configmap.yaml -> nginx pod
+
+https://openvpn-1396596948.us-west-2.elb.amazonaws.com/?src=connect&auth-error=LOCKOUT  --> openvpn Lock out
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/IEGOQ/pages/17063605026/How+to+renew+Kubernetes+certificates  ->  RENEW K8s Certificate
+
+https://myid.bakerhughes.com/app/UserHome  -->                MY ID
+	
+https://jenkins.ops.fullstream.ai/computer/172.16.60.136/  --> JENKINS NODE
+https://github.com/bh-ent-tech/aurora-deployment-files/blob/master/devbh/Pgadmin/deployment.yaml	
+	
+https://bakerhugheswiki.atlassian.net/wiki/spaces/IEGOQ/pages/388816241998/E2C+Environment+Details -->  E2C ENV'S SERVERS/ENDPOINT LISTS
+
+	
+https://github.com/bh-ent-tech/digitalops_internal_devops_scripts/tree/master/Jenkinsjob-template  --->  JENKINS JOB CLEAN WORK SPACE TEMPLATE
+
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388813423029/How+to+install+PGADMIN+as+docker+container+on+Ubuntu+Linux --> PGadmin installation
+
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388816177226/BH+Cloud+-+App+Shell+AUTH+Issue+with+Private+Domain+URL --->
+
+	
+https://github.com/bh-ent-tech/digitalops_internal_devops_scripts/tree/master/RELOADER --> reloader
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388825579553/Argo+CD+Steps+to+Create+Local+Read-only+User --> argocd read only user creation
+
+https://github.com/bh-ent-tech/ofe_meta_files/tree/master/REDIS-INSIGHT --> redis insight setup in k8's
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388824858694/Argo+CD+Setup+in+Kubernetes --> argocd set up in k8 cluster
+https://argo-cd.readthedocs.io/en/stable/
+https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd
+https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
+https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/
+
+
+https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
+
+
+
+
+	
+	***E2C URLS***
+   ====================
+https://e2c-ngix-dev01.eic.fullstream.ai/#/login/ --> E2C DEV URL 
+ 
+https://keycloak-ngix-dev01.eic.fullstream.ai/auth/  --> E2C DEV KEYCLOAK
+
+e2c-dev-postgres.caohklckcyzl.us-west-2.rds.amazonaws.com --> e2c-dev-postgres
+
+//e2c-dev-postgres.caohklckcyzl.us-west-2.rds.amazonaws.com:5432/
+
+https://e2c-nginx-qa01.eic.fullstream.ai/#    ---> E2C QA URL 
+
+e2c-qa.caohklckcyzl.us-west-2.rds.amazonaws.com:5432/orchestrationqa
+
+https://keycloak-ngix-qa01.eic.fullstream.ai/auth
+
+
+https://e2c-fat01-nginx.eic.fullstream.ai/#  --> E2C FAT URL
+
+https://e2c-nginx-fat.eic.fullstream.ai/auth/realms/IQUITY/  --> keycloak - fat
+
+
+
+	***IMO 2020 URLS***
+   ===================
+https://lifespan-uat-app.cde.fullstream.ai/login --> IMO 2020 UAT 
+
+
+https://login-dev.bakerhughes.com/
+
+
+regname: imodocker.np-0000158.npause1.bakerhughes.com
+Uname: dockeruser
+pass: imo2020BHr3gP8x
+
+
+k8api endpointk8api-NLB-094398820482-41e1d5f2b19f5bec.elb.us-east-1.amazonaws.com
+
+
+git hub https://github.com/bh-oic
+bh-oic
+GitHub is where bh-oic builds software.
+
+ 
+
+
+
+
+e2c-fat.caohklckcyzl.us-west-2.rds.amazonaws.com
+
+https://795770151185.dkr.ecr.us-west-2.amazonaws.com
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/bh-ent-tech/ss_kubernetes_deployment/blob/Master/DEV/bh-user-mgmt-service/Jenkinsfile --> CD jenkins template
+
+
+https://jenkins.ops.fullstream.ai/job/MTC_Jobs/job/RDC/job/RDC_UAT/job/rdc-mindmap-app-CD/ --> CD job for RDC
+
+
+https://openvpn-1396596948.us-west-2.elb.amazonaws.com/?src=connect --> open vpn download url
+
+
+https://github.com/bh-ent-tech/ss_kubernetes_deployment/tree/Master/DEV/bh-user-mgmt-service -->  JenkinsFile
+
+
+https://github.com/bh-ent-tech/bh-user-mgmt-service/blob/master/Jenkinsfile --> Jenkinsfile
+
+
+https://github.com/bh-ent-tech/quad-template/blob/develop/Jenkinsfile --> Jenkinsfile
+
+
+http://sc.ge.com/%2aAWSEntLogin --> AWS GE login/
+
+
+https://e2c-pgadmin-elb-821757689.us-west-2.elb.amazonaws.com/pgadmin4/login?next=%2Fpgadmin4%2Fbrowser%2F  --> pglink for adding DB details
+
+
+BH_Digital_Downtime_Notification@bakerhughes.com  --> DL Baker Hughes Downtime_Notification 
+
+
+location /test {
+default_type text/plain;
+return 200 'Welcome to test page for QUAD New App shell Dremio'; --> nginx-conf-route for test
+}
+
+***troubleshooting nginx server
+===================================
+
+setsebool -P httpd_can_network_connect 1
+sudo cat /var/log/audit/audit.log | grep nginx | grep denied
+sudo cat /var/log/audit/audit.log | grep nginx | grep denied | audit2allow -M mynginx
+sudo semodule -i mynginx.pp
+
+httpd_can_network_connect
+
+
+ *** K8's commands ***
+=================================
+ 
+ kubectl create configmap postgres-config --from-env-file=postgresDB.properties --> other than yaml file
+ 
+ 
+export KUBECONFIG=/etc/kubernetes/admin.conf  --> command for unauthorized in k8's master
+
+
+
+kubectl cp Baker\ Hughes default/dep-keycloak-svc-85f57f5d9f-kcxkv:/opt/jboss/keycloak/themes --> e2c keycloak theme
+
+
+kubectl get pod dep-pipeline-manager-service-86cdcc95bc-4d9g5 -o yaml
+
+
+
+
+**** NGINX-COMMANDS for troubleshooting****
+=============================================
+
+  tail -f access.log
+  vi /etc/nginx/nginx.conf
+  systemctl restart/status/stop nginx
+  nginx -t
+  cat /etc/nginx/nginx.conf
+  cat /etc/nginx/nginx.conf
+  tail -100f /var/log/nginx/access.log
+  bastion-cloud.np-0000002.npause1.bakerhughes.com
+  curl  172.22.96.19:32000
+  netstat -an | grep 80
+  
+  
+***troubleshooting nginx server
+=================================================
+
+setsebool -P httpd_can_network_connect 1
+sudo cat /var/log/audit/audit.log | grep nginx | grep denied
+sudo cat /var/log/audit/audit.log | grep nginx | grep denied | audit2allow -M mynginx
+sudo semodule -i mynginx.pp
+
+httpd_can_network_connect
+
+
+========================================================================================================
+
+kubectl get secret $KUBE_DEPLOY_SECRET_NAME -o jsonpath='{.data.ca\.crt}'|base64 --decode > deploy.crt
+
+
+
+
+copy file from bastion to server
+====================================
+scp app-shell-1.0.tar root@100.64.186.232:/home/gurrven/
+
+
+copy file from bastion to server (from bastion)
+====================================
+
+
+
+scp @<ip>:<path to file to be copied> <path where you want to copy>
+scp @ip
+
+from server root to local machine:
+
+scp root@ip:/root/file.txt ~/downloads/file.txt
+
+
+
+scp from local to linux server
+
+scp BakerHughes.zip  10.77.13.90:/home/gurrven/
+
+
+
+   commands from EC2 instance, to get the ECR scan report
+==============================================================
+
+
+
+/usr/local/bin/aws ecr describe-image-scan-findings --repository-name e2c-qa --image-id imageTag=edge-core-uaa_v2.0.2.63 --region us-east-1
+
+
+Jenkins Pipeline: How to Define a Variable – Jenkins Variables
+=================================================================
+
+
+Variables in a Jenkinsfile can be defined by using the def keyword.
+
+Such variables should be defined before the pipeline block starts.
+
+When variable is defined, it can be called from the Jenkins declarative pipeline using ${...} syntax.
+
+
+Example:
+// Define variable
+def myVariable = "foo"
+
+// Print variable
+pipeline {
+  agent any
+  stages {
+    stage ("Print variable") {
+      steps {
+        echo "My variable is ${myVariable}"
+      }
+    }
+  }
+}
+
+==================================================
+docker socket enable for e2c service
+ 
+ 
+#!/bin/sh
+if(! netstat -ntlp | grep 6724 ); then   
+systemctl stop docker 
+dockerd -H 0.0.0.0:6724 -H unix:///var/run/docker.sock &
+exit 0
+fi
+
+
+=========================================================
+
+script for deleting unused docker images in k8's cluster 
+
+
+vi remove-unused-image.sh
+
+#!/bin/bash
+docker ps --filter "status=exited" | awk '{print $1}' | xargs --no-run-if-empty docker rm     (to print docker images id which are unused )
+docker system prune -a -f   (To delete docker images which are unused )
+
+ 
+ 
+ 
+  0 0 * * 5    /root/remove-unused-image.sh  (scheduling job  every friday evening)
+
+
+
+===========================================================================================
+
+       eks ingress controller
+   ==============================
+
+https://kubernetes.github.io/ingress-nginx/
+
+https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/aws/deploy.yaml
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/KSWPD/pages/388776755561/EKS+-+Node+Group
+
+
+  creation eks 
+  
+  
+  
+===============================================================================
+
+
+unable to connect to the server x509 certificate has expired or is not yet valid kubernetes
+
+kubeadm certs check-expiration
+
+kubeadm alpha certs renew all
+
+kubectl get po
+error: You must be logged in to the server (Unauthorized)
+
+
+
+then use below command for exporting KUBECONFIG to admin.conf
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+============================================================================
+
+
+added Route53 entry to the ALB  (when internal alb routed to Route53)
+
+https://solace-preprod.pre-0000005.pause1.bakerhughes.com
+
+
+===================================================================================================
+
+condition for skipping any stage in jenkinsfile
+
+
+choice(name: 'BlackDusk_Stage_Skip', choices: ['true', 'skip'])
+
+
+     stage ('Black_Duck_Scan') {
+         steps {
+             script {
+            if("$BlackDusk_Stage_Skip" == 'true') {
+                withCredentials([usernamePassword(credentialsId: 'BLACK_DUCK_ID', passwordVariable: 'blackduck_pwd', usernameVariable: 'blackduck_user')]) {
+                synopsys_detect '''  --blackduck.url='https://bakerhughes.app.blackduck.com'  --blackduck.api.token='${blackduck_pwd}' --detect.project.name=${image_build} --detect.project.group.name='GHEM' --detect.project.version.name='''+ buildVersion +''' --detect.project.user.groups='GHEM - Project Managers'  '''
+                    }
+                  }
+                  else{
+                  echo 'This stage may be skipped'
+                        }
+                    }
+                }
+            }
+===========================================================================
+
+
+
+#!/bin/sh
+ kubectl get pods --no-headers=true -o custom-columns=dep-keycloak-svc:.metadata.name | grep dep-keycloak-svc > pod.txt
+
+file="$WORKSPACE/pod.txt"
+
+cat pod.txt | \
+while read CMD; do
+    echo $CMD
+kubectl cp Baker\ Hughes default/$CMD:/opt/jboss/keycloak/themes   (cat is for listing contents of any file. echo is for listing value of some variable)
+done
+
+
+==================================================
+
+
+cat /etc/yum.conf (exclude docker* kube* when patching happens)
+
+
+
+=========================================================================
+
+  10 ;07 9 :30  
+ 04 :37  4 : 00  
+
+=====================================================
+Go to pod's exec mode kubectl exec -it pod_name -n namespace -- /bin/bash
+Run cat /sys/fs/cgroup/cpu/cpuacct.usage for cpu usage
+Run cat /sys/fs/cgroup/memory/memory.usage_in_bytes for memory usage
+
+kubectl describe PodMetrics <pod_name>
+
+
+===========================================================================================
+
+============aws cli installation===================
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+aws --version
+ 
+cp -r /usr/local/bin/aws /bin/aws
+
+
+=========================================================================================
+
+
+
+
+Install aws s3 cli in instance :
+
+
+It will migrate data from aws efs to s3 bucket :
+
+aws s3 sync /root/efs-mount-point/solace  s3://bucket_url/solace
+
+
+ls -a1 | wc -l (count files in directory)
+
+
+ aws s3 sync  //root/efs-mount-point/Fastlca-dev-pv/fastlca-app-pv-v2/uploads/  s3://709584230211-us-east-1-fastlca-zenko-dev/Objectstore/test1/
+
+aws s3 ls s3://709584230211-us-east-1-fastlca-zenko-dev/Objectstore/DEV
+
+
+aws s3api put-object --bucket root-bucket-name --key new-dir-name/
+
+
+aws s3api put-object --bucket s3://709584230211-us-east-1-fastlca-zenko-dev/Objectstore/ --key  test1
+
+aws s3 cp test1 s3://709584230211-us-east-1-fastlca-zenko-dev/Objectstore/ --recursive
+
+================================================================================================================================================
+
+To run pods on selected  node  We use node selector 
+
+ kubectl get nodes --show-labels
+ 
+ kubectl label nodes 1a5f526c17d6bf1 solace=true
+
+spec:
+  containers:
+  - name: httpd
+    image: httpd
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    solace: true
+
+
+/dev/nvme0n1p1  (this ebs volume in linux server)
+
+
+
+
+
+
+
+
+
+
