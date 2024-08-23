@@ -1,0 +1,55 @@
+# .bashrc
+
+# User specific aliases and functions
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias kubectl='/usr/local/bin/kubectl'
+alias k='/usr/local/bin/kubectl'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+
+#!/bin/bash
+
+SELF_HOSTED_REGISTRY="https://fastlca-registry-dev.np-0000189.npause1.bakerhughes.com"
+GITHUB_PACKAGE_REGISTRY="gchr.io/bh-ent-tech/"
+ 
+
+read -p "Github Username: " venkat-bh
+read -p "Github Token: ""
+docker login -u $GITHUB_USERNAME -p $GITHUB_TOKEN $GITHUB_PACKAGE_REGISTRY
+
+ 
+echo "Enter the image name: "
+
+read IMAGE 
+echo $IMAGE
+
+ 
+
+TAGS=$(curl -X GET $SELF_HOSTED_REGISTRY/v2/$IMAGE/tags/list  -u flcadockeruserdev:tLXkuqkKtGgvHuwT | jq -r '.tags[]' )
+
+ 
+
+for tag in $TAGS
+do
+    docker pull $SELF_HOSTED_REGISTRY/$IMAGE:$tag
+    echo image exist
+
+ 
+
+
+    # docker tag $SELF_HOSTED_REGISTRY/image:tag $GITHUB_PACKAGE_REGISTRY/image:tag
+    # docker push $GITHUB_PACKAGE_REGISTRY/image:tag
+
+ 
+
+    # docker image rm $SELF_HOSTED_REGISTRY/image:tag
+    # docker image rm $GITHUB_PACKAGE_REGISTRY/image:tag
+done
