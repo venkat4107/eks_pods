@@ -1,1 +1,64 @@
+yes | cp -R -a -v --preserve=all /root/efs-mount-point/solace-backup/. /root/efs-mount-point/solace-backup2/
+ 
+yes | cp -R -a -v --preserve=all /mnt/data/solace/. /root/efs-mount-point/solace-backup/.
+
+
+
+ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0f3aaebcc5fe624c9.efs.us-east-1.amazonaws.com:/  /root/efs-mount-point
+
+
+mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,actimeo=0,sync,retrans=2,noresvport fs-050ad6a80a8a326e5.efs.us-east-1.amazonaws.com:/ /root/test/efs-mount-point
+
+
+
+argocd set up in k8 cluster
+https://argo-cd.readthedocs.io/en/stable/
+https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd
+https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
+https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/
+
+
+https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
+
+
+      eks ingress controller
+   ==============================
+
+https://kubernetes.github.io/ingress-nginx/
+
+https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/aws/deploy.yaml
+
+https://bakerhugheswiki.atlassian.net/wiki/spaces/KSWPD/pages/388776755561/EKS+-+Node+Group
+
+
+
+Jenkins Pipeline: How to Define a Variable – Jenkins Variables
+=================================================================
+
+
+Variables in a Jenkinsfile can be defined by using the def keyword.
+
+Such variables should be defined before the pipeline block starts.
+
+When variable is defined, it can be called from the Jenkins declarative pipeline using ${...} syntax.
+
+
+Example:
+// Define variable
+def myVariable = "foo"
+
+// Print variable
+pipeline {
+  agent any
+  stages {
+    stage ("Print variable") {
+      steps {
+        echo "My variable is ${myVariable}"
+      }
+    }
+  }
+}
+
+==================================================
+
 
