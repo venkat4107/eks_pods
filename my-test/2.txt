@@ -17,7 +17,7 @@ fi
 
 #!/bin/bash
 
-SELF_HOSTED_REGISTRY="https://fastlca-registry-dev.np-0000189.npause1.bakerhughes.com"
+SELF_HOSTED_REGISTRY=""
 GITHUB_PACKAGE_REGISTRY="gchr.io/bh-ent-tech/"
  
 
@@ -33,7 +33,7 @@ echo $IMAGE
 
  
 
-TAGS=$(curl -X GET $SELF_HOSTED_REGISTRY/v2/$IMAGE/tags/list  -u flcadockeruserdev:tLXkuqkKtGgvHuwT | jq -r '.tags[]' )
+TAGS=$(curl -X GET $SELF_HOSTED_REGISTRY/v2/$IMAGE/tags/list  -u dockeruserdev:tLXkuqkKtGgvHuwT | jq -r '.tags[]' )
 
  
 
