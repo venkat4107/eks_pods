@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        # nginx.ingress.kubernetes.io/backend-protocol: “HTTPS" 
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: "600000"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600000"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600000"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    name: appshell-ingress
+    namespace: default  
+spec:
+  tls:
+  - hosts:
+    - 'fastlca-dev.np-0000191.npause1.bakerhughes.com'
+    secretName: san-app-tls
+  rules:
+  - host: fastlca-dev.np-0000191.npause1.bakerhughes.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-app-shell
+            port:
+              number: 80
+      - path: /socket.io
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-app-shell
+            port:
+              number: 9000  
