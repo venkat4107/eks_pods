@@ -1,0 +1,249 @@
+name: Master Build
+
+#on:
+    push:
+ #       branches:
+#        - master
+
+env:
+  image_name: "ccus-asset-orch-svc"
+  registry_name: "ghcr.io/bh-ent-tech"
+  docker_file_path: "."
+  Package_lock: "."
+  CI_COMMIT_MESSAGE: Upgrading image tag in helm chart to
+  CI_COMMIT_AUTHOR: CD
+  SONAR_TOKEN: ${{ secrets.SONAR_NEW_TOKEN }}
+  SSL_CERT_DIR: "/etc/ssl/certs"
+  NODE_EXTRA_CA_CERTS: "/etc/ssl/certs/ca-bundle.crt"
+  REQUESTS_CA_BUNDLE: "/etc/ssl/certs/ca-bundle.crt"
+
+jobs:
+    createTag:
+      needs: [clamAV_scan]
+      name: create tag on master build
+      runs-on: ubuntu-latest
+      outputs:
+        output: ${{ steps.git_tag_publish.outputs.new_tag }}        
+      steps: 
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: '0'
+  
+        - name: Bump version and push tag
+          id: git_tag_publish
+          uses: anothrNick/github-tag-action@1.67.0
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              WITH_V: true
+              # INITIAL_VERSION: 0.3.0
+              # CUSTOM_TAG: v0.3.5
+              DEFAULT_BUMP: patch
+              MAJOR_STRING_TOKEN: ''
+              MINOR_STRING_TOKEN: ''
+              PATCH_STRING_TOKEN: ''
+
+    clamAV_scan:
+        name: AV SCAN
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout github repository
+            uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+              token: ${{ secrets.GH_TOKEN }}
+
+          - name: update package
+            run: |
+              sudo apt-get update -y
+    
+          - name: install ClamAV
+            run: |
+              sudo apt install clamav clamav-daemon -y
+    
+          - name: Verify Installation
+            run: |
+              clamscan --version
+          
+          - name: update ClamAV virus signature database
+            run: |
+              sudo systemctl stop clamav-freshclam
+              sudo freshclam
+              sudo systemctl start clamav-freshclam
+              sudo systemctl status clamav-freshclam
+    
+          - name: Scan Files
+            run: |
+              clamscan -i -r --log=CLAMAV_SCAN_REPORT .
+              ls -ltr | grep "CLAMAV_SCAN_REPORT"
+               
+          - name: Upload Artificat
+            uses: actions/upload-artifact@v4
+            with:
+              name: av_scan
+              path: "CLAMAV_SCAN_REPORT"
+              
+    build-asset-orch-svc:
+        needs: [createTag]
+        name: Build-SVC SONARSCAN & BLACKDUCK SCAN
+        runs-on: CCUS_CI_DEVrunner
+        env:
+          TagValue: ${{needs.createTag.outputs.output}} 
+        steps:
+        
+            - name: clean workspace
+              run: rm -fr $GITHUB_WORKSPACE && mkdir $GITHUB_WORKSPACE
+              
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: '0'
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+            - name: Install Dependencies
+              run: npm config set @bh-ent-tech:registry https://npm.pkg.github.com && echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > .npmrc && npm i --legacy-peer-deps
+
+            - name: Build
+              run: CI=false npm run build
+
+            - name: Test and coverage
+              run: CI=false npm test; npm run test:coverage
+
+            - name: Sonar Scan
+              run: |
+                  sed -i "s/SONAR_LOGIN/${{ secrets.SONAR_LOGIN }}/g" sonar-project.properties 
+                  sed -i "s/SONAR_PASSWORD/${{ secrets.SONAR_PASSWORD }}/g" sonar-project.properties
+                  npm run sonar
+              
+            - name: SonarQube Quality Gate check
+              id: sonarqube-quality-gate-check
+              uses: sonarsource/sonarqube-quality-gate-action@master
+         # Force to fail step after specific time.
+              timeout-minutes: 5
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_NEW_TOKEN }}
+                SONAR_HOST_URL: ${{ secrets.SONAR_NEW_HOST_URL }} #OPTIONAL
+
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v2
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push
+              uses: docker/build-push-action@v4
+              with:
+                  context: .
+                  file: Dockerfile
+                  push: false
+                  tags: ${{env.registry_name}}/${{env.image_name}}:${{env.TagValue}}
+            
+            - name: Push Docker Image to registry
+              run: |
+                docker image push ${{env.registry_name}}/${{env.image_name}}:${{env.TagValue}}
+
+            - name: Run OSS Scan - BackDuck Scanning
+              uses: synopsys-sig/synopsys-action@v1.11.0
+              continue-on-error: true
+              env:
+                DETECT_PROJECT_NAME: "${{ github.event.repository.name }}"
+                DETECT_PROJECT_VERSION_NAME: "${{ github.ref }}"
+                DETECT_PROJECT_GROUP_NAME: "CCUS"
+                DETECT_PROJECT_USER_GROUP: "CCUS - Project Managers"
+                DETECT_DETECTOR_SEARCH_DEPTH: 10
+                DETECT_DETECTOR_SEARCH_CONTINUE: true
+                DETECT_DIAGNOSTIC: true
+              with:
+                scan-mode: INTELLIGENT #"${{ steps.oss-scan-mode.outputs.selected-mode }}"
+                blackduck_scan_failure_severities: 'BLOCKER,CRITICAL,MAJOR'                
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                detect_version: v1.11.0
+                blackduck_url: ${{ secrets.BLACKDUCK_URL }}
+                blackduck_token: ${{ secrets.BLACKDUCK_TOKEN }}
+
+    PRISMA-SCAN:
+        name: PRISMA-SCAN
+        runs-on: ubuntu-latest
+        needs: [build-asset-orch-svc,createTag]
+        env:
+          TagValue: ${{needs.createTag.outputs.output}}    
+        steps:
+          - name: Login to GitHub Container Registry
+            uses: docker/login-action@v2
+            with:
+              registry: ghcr.io
+              username: ${{ github.actor }}
+              password: ${{ secrets.GITHUB_TOKEN }}
+
+          - name: Pull Docker Image from registry
+            run: 
+              docker image pull "${{env.registry_name}}/${{env.image_name}}:${{env.TagValue}}"
+
+          - name: Prisma Cloud image scan
+            id: scan 
+            uses: PaloAltoNetworks/prisma-cloud-scan@v1.5 
+            with: 
+                pcc_console_url: ${{ secrets.PCC_CONSOLE_URL }}
+                pcc_user: ${{ secrets.PCC_USER }}
+                pcc_pass: ${{ secrets.PCC_PSS }} 
+                image_name: ${{env.registry_name}}/${{env.image_name}}:${{env.TagValue}}
+
+    checkmarx-scan:
+        needs: [build-asset-orch-svc,createTag]
+        runs-on: CCUS_CI_DEVrunner
+        strategy:
+          matrix:
+            java-version: [11.x]
+        permissions:
+          contents: read                    # for actions/checkout to fetch code
+          issues: write                     # for checkmarx-ts/checkmarx-cxflow-github-action to write feedback to github issues
+          pull-requests: write              # for checkmarx-ts/checkmarx-cxflow-github-action to write feedback to PR
+          security-events: write            # for github/codeql-action/upload-sarif to upload SARIF results
+          actions: read                     # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+        timeout-minutes: 15
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+    
+        - name: Clone CxFlow Folder from bh-Cordant-Checkmarx Repo
+          run: |
+              git clone https://${{ secrets.GH_TOKEN }}@github.com/bh-ent-tech/bh-Cordant-Checkmarx.git
+              
+        - name: repository check
+          id: repo_name
+          run: | 
+                 echo "repo_name=`echo ${{github.repository}} | awk -F "/" '{print $2}'`" >> $GITHUB_OUTPUT
+              
+        - name: Checkmarx cli action
+          run: cd ./bh-Cordant-Checkmarx/CxFlow; sh -x runCxConsole.sh Scan -v -CxServer "https://checkmarx.prd-0000102.pause1.bakerhughes.com" -ProjectName "CxServer\SP\BHGE\IET\CTS\CCUS\${{ github.event.repository.name }}" -CxUser "${{ secrets.CHECKMARX_USERNAME }}" -CxPassword "${{ secrets.CHECKMARX_PASSWORD }}" -LocationType folder  -LocationPath /actions-runner/_work/${{steps.repo_name.outputs.repo_name}}/${{steps.repo_name.outputs.repo_name}} -Preset "Checkmarx Default" -Comment 'Automation scan 1st time' -SASTHigh "0" -SASTMedium "0" -ReportPDF "Report.pdf" -locationPathExclude ""
+          # removed medium vulenrability as suggested by showji
+        - name: list files
+          run: ls -lrt
+        - name: my-artifact
+          uses: actions/upload-artifact@v3
+          with:
+            path: "./bh-Cordant-Checkmarx/CxFlow/Checkmarx/Reports/Report.pdf"
+    
+    deployment-tag-update:
+      needs: [build-asset-orch-svc,createTag,checkmarx-scan,PRISMA-SCAN]
+      name: image tag update
+      runs-on: ubuntu-latest
+      env:
+        TagValue: ${{needs.createTag.outputs.output}}
+        image: ghcr.io/bh-ent-tech/ccus-asset-orch-svc:$TagValue
+        
+      steps:
+          - uses: actions/checkout@v3
+            with:
+              repository: 'bh-ent-tech/CCUS-HelmCharts'
+              token: ${{ secrets.GH_TOKEN }}
+              fetch-depth: 0
+              ref: dev
+
+          - name: Commit build artifacts (dist, devdist, docs, coverage)
+            run: |
+              git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+              git config --global user.email "${{github.event.repository.name}}@users.noreply.github.com"
+              sed -i "s|image: .*|image: ${{env.image}} |" charts/asset-orch/values-dev.yaml
+              git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}${{env.TagValue}}"
+              git push origin dev
