@@ -1,0 +1,274 @@
+
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: FastLCA QA Automation
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_version:
+        description: 'Give the Build Version'
+        default: 'vX.X.XX'
+        required: true
+      env_selection:
+        description: 'Select the Environment file where you want run'
+        required: true
+        default: 'envParams.json'
+      hook_name:
+        description: 'Give the hook tag-name that you want run'
+        required: true
+        default: 'SCLCASelect'
+        type: choice
+        options:
+          - 'Regression'
+          - 'Landing_LogOut'
+          - 'Basic'
+          - 'CLCA' 
+          - 'SCLCASelect'
+          - 'Step1'
+      recipient_email_address:
+        description: 'Give recipient email address to receive Execution Report in email'
+        required: true
+        default: 'gayathri.sundareesan@bakerhughes.com'  
+env:
+  tag_version: 'vX.X.XX'
+  env_selection: 'envParams.json'
+  hook_name: '@Landing_LogOut'
+  recipient_email_address: 'gayathri.sundareesan@bakerhughes.com'
+      
+jobs:
+  build:
+    timeout-minutes: 36000
+    runs-on:
+      - fastlca-qa-automation-runner
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'microsoft'
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.4.2
+          arguments: build
+      - name: Make gradlew executable
+        run: chmod 777 ./gradlew && ls -la
+      - name: add wrapper
+        run: gradle wrapper --gradle-version 7.4.2 --distribution-type all
+      - run: echo "${{ inputs.hook_name }}"
+      - run: gradle run --args="envParams.json --suites=@${{inputs.hook_name}}"
+      # - name: chrome install      
+      #   uses: browser-actions/setup-chrome@v1
+      
+      # - run: chrome --version
+        
+        
+      # - name: Build with Gradle
+      #   run: |
+      #     chmod +x ./gradlew
+      #     ./gradlew clean build
+
+      # - name: Gradle & java version check & Testcase run
+      #   run: |
+      #     ./gradlew -version
+      #     java -jar "./dist/fastlca_qa_project-1.0-0b82571.jar"  ${{inputs.env_selection}} --suites="${{inputs.hook_name}}"
+      
+      - name: Test Report Folder creation
+        if: always()
+        run: |
+          ./gradlew test
+          
+      - name: Upload TestReport under Artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: TestReport_${{inputs.hook_name}}_${{inputs.tag_version}}
+          path: ./cucumberReports
+          retention-days: 30   
+
+      - name: HTML status report Generation
+        if: always()
+        run: |
+          startline=$(sed -n '/<table/=' target/html-copy/cucumber-html-reports/overview-features.html | tail -1)
+          endline=$(sed -n '/table>/=' target/html-copy/cucumber-html-reports/overview-features.html | tail -1)
+          echo $startline,$endline
+          sed -n "$startline,$endline p" target/html-copy/cucumber-html-reports/overview-features.html > target/temp_file.html
+          sed -i -e '/Build Version:/r target/temp_file.html' target/EMAIL.html
+          sed -i 's/00000/${{ github.run_id }}/g' target/EMAIL.html
+          sed -i 's/@environment_name/${{inputs.environment_name || env.environment_name}}/g' target/EMAIL.html
+          sed -i 's/@env/${{inputs.env_selection || env.env_selection}}/g' target/EMAIL.html
+          sed -i 's/@suite/${{inputs.hook_name}}/g' target/EMAIL.html
+          sed -i 's/@version/${{inputs.tag_version || env.tag_version}}/g' target/EMAIL.html
+          echo "<br>Branch:<b>${{ github.ref_name }}</b>" > target/temp_file.html
+          sed -i -e '/Suite: /r target/temp_file.html' target/EMAIL.html
+          sed -i 's/TestReport/TestReport_${{inputs.hook_name}}_${{inputs.tag_version}}/g' target/EMAIL.html
+
+      
+      - name: Upload Email under Artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: EmailReport_${{inputs.hook_name}}_${{inputs.tag_version}}
+          path: ./target/EMAIL.html
+          retention-days: 30
+
+      # - name: Send mail Report
+      #   if: always()
+      #   uses: dawidd6/action-send-mail@v3
+      #   with:
+      #     server_address: ${{ secrets.SMTP_SERVER }}
+      #     server_port: ${{ secrets.SMTP_PORT }}
+      #     secure: false
+      #     username: ${{ secrets.SMTP_USERNAME }}
+      #     password: ${{ secrets.SMTP_PASSWORD }}
+      #     subject: FastLCA QA Regression ${{inputs.hook_name}} Execution Summary ${{inputs.tag_version}}
+      #     to: ${{inputs.recipient_email_address}}
+      #     from: SVC-FastLCA
+      #     html_body: file://target/EMAIL.html
+      #     ignore_cert: true
+      #     convert_markdown: true
+      #     priority: 'normal'        
+
+
+
+
+
+
+pipeline {
+    agent {label 'docker'}
+    parameters {
+	        string(defaultValue: "QA", description: 'QA/Dev/FAT/Pre-Prod/Prod', name: 'ENV_NAME')
+	        string(defaultValue: "Sanity", description: 'TAGS: Regression/Sanity/P1/P2', name: 'TEST_TYPE')
+	        string(defaultValue: "nayan.mahindra@bakerhughes.com", description: 'email for notifications - nayan.mahindra@bakerhughes.com', name: 'EMAIL_NOTIFICATION')
+	        string(defaultValue: "https://github.com/bh-ent-tech/fastlca-qa-automation.git", description: '', name: 'GIT_URL')
+	        string(defaultValue: "feature", description: 'Git Branch', name: 'GIT_BRANCH')
+		
+	    }
+ environment {
+  	PROJECT_DEFAULT_REPLYTO = "DIGUnifiedAutomationFrameork@bakerhughes.onmicrosoft.com"
+	CUCUMBER_REPORT_URL = "${BUILD_URL}cucumber-html-reports/overview-features.html"
+
+            }
+	
+	   
+ stages{
+	   stage ('Setup JDK_11') {
+            steps {
+		echo 'Cleaning.. jdk11 directory'
+				script {
+				    sh 'rm -rf target'
+					sh 'rm -rf jdk11'
+				}
+                sh '#!/bin/bash'
+                sh 'set -x'
+                sh 'cd $WORKSPACE'
+                sh 'rm -rf *.*'
+                echo "############Downloading JDK11 #######################"
+                sh 'curl -L https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.3%2B7/OpenJDK11U-x64_linux_11.0.3_7.tar.gz > ojdk11.tar.gz'
+                echo "############Downloaded JDK11 #######################"
+                sh 'mkdir jdk11'
+                sh 'tar -xf ojdk11.tar.gz --directory jdk11'
+                sh 'cp -a jdk11/**/. jdk11'
+		sh 'ls -ltr'
+                sh 'rm -rf jdk11/open*'
+                sh 'rm -rf ojdk11.tar.gz'
+                echo "################## setting JAVA_HOME ####################"
+			    sh 'export JAVA_HOME=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/jdk11 ; export PATH=${JAVA_HOME}/bin:${PATH}'
+			    //sh 'export PATH=${JAVA_HOME}/bin:${PATH}'
+                sh '# Reports Directory'
+                sh 'cd $WORKSPACE'
+                sh 'mkdir target'
+		    sh 'echo $JAVA_HOME'
+            }
+        }
+        
+        stage('Setup Gradle 6.2.2'){
+			steps{
+				echo  '>>>>>>>>>> downloading Gradle - 6.2.2 from "https://downloads.gradle-dn.com/distributions/gradle-6.2.2-bin.zip"'
+				sh 'wget --no-verbose https://downloads.gradle-dn.com/distributions/gradle-6.2.2-bin.zip -O temp.zip'
+				sh 'unzip temp.zip'
+				sh 'rm -rf temp.zip'
+				sh 'ls -l'
+				sh 'echo $JAVA_HOME'
+                echo "################## setting GRADLE_HOME ####################"
+			    sh 'export GRADLE_HOME=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/gradle-6.2.2 ; export PATH=${GRADLE_HOME}/bin:${PATH}'
+			    //sh 'export PATH=${GRADLE_HOME}/bin:${PATH}'
+			    echo "################## checking GRADLE_HOME ####################"
+			    sh 'echo $GRADLE_HOME'
+			    sh 'echo $PATH'
+			}
+		}
+        
+	stage('Checkout Project') { 
+		//Checkout from git repo
+		steps {
+		    echo "#################### Cloning Git Project ########################"
+			checkout([$class: 'GitSCM', branches: [[name: '*/${GIT_BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: '${GIT_URL}']]])
+	          }
+	   }
+        stage('Check gradle properties'){
+            steps {
+                echo "# create gradle.properties file"
+                sh 'ls'
+                sh 'echo org.gradle.java.home=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/jdk11/ >> gradle.properties'
+                sh 'cat gradle.properties'
+                
+                echo "############ Gradle Version starts #######################"
+                sh 'gradle -v -Dorg.gradle.java.home=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/jdk11'
+                echo "############ Gradle Version ends #######################"
+                
+                echo "############ Java Version starts #######################"
+                sh 'java -version'
+                echo "############ Java Version ends #######################"
+                
+            }
+        }
+	 
+	 stage('Test Execution'){
+            steps {
+
+                echo "################# multiple commands execution starts #################"
+			    sh 'export GRADLE_HOME=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/gradle-6.2.2 ; export PATH=${GRADLE_HOME}/bin:${PATH} ; export JAVA_HOME=/opt/jenkins_build/workspace/MTC_Jobs/OFE-services/OFE-QA/Automation/Pipeline_Advisory_Service/jdk11 ; export PATH=${JAVA_HOME}/bin:${PATH} ; java -version ; gradle -v ; gradle run --args="envParams.json"'
+                echo "################# multiple commands execution ends ###################"
+            }
+        }
+
+		stage('Publish Result and Notification'){
+            steps {
+
+                mail(bcc: '',
+				 body: "Cyborg AT Run updates: \n\n Job Name: ${JOB_BASE_NAME} \n Test Suite: ${TEST_TYPE} \n Environment: ${ENV_NAME} \n Build#: ${BUILD_NUMBER} \n Cucuber report URL: ${CUCUMBER_REPORT_URL} \n\n\n Cyborg AT \n ${PROJECT_DEFAULT_REPLYTO}",
+				 cc: '',
+				 from: "$PROJECT_DEFAULT_REPLYTO",
+				 replyTo: '$PROJECT_DEFAULT_REPLYTO',
+				 subject: "AT Build | ${JOB_BASE_NAME} | Build#${BUILD_NUMBER}",
+				 to: env.EMAIL_NOTIFICATION)
+				// Cucumber report plugin
+				 cucumber fileIncludePattern: '**/target/cucumber-reports/Cucumber.json', sortingMethod: 'ALPHABETICAL'
+				// publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '$WORKSPACE/${BUILD_NUMBER}/cucumber-html-reports', reportFiles: 'overview-features.html', reportName: 'Test Report', reportTitles: ''])
+		
+            }
+        }
+     }
+
+
+  
+}
+
+
+
+
+
+
+
+      
