@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-nginx
+  labels:
+    app: dep-nginx
+  annotations:
+    configmap.reloader.stakater.com/reload: "nginx-config"    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dep-nginx
+  template:
+    metadata:
+      labels:
+        app: dep-nginx
+    spec:
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      containers:
+      - name: dep-nginx
+        image: ghcr.io/bh-ent-tech/nginx-fastlca:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          readOnly: true
+          subPath: nginx.conf
+      imagePullSecrets:
+        - name: fastlca-reg-cred    
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    app: dep-nginx
+
+
+
+
+
+
+
+
+
+
+
+
