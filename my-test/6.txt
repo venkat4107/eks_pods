@@ -36,3 +36,33 @@ spec:
             name: svc-app-shell
             port:
               number: 9000  
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastlcasvc-v2c-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # nginx.ingress.kubernetes.io/backend-protocol: “HTTPS"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600000"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600000"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600000"
+spec:
+  rules:
+  - host: fastlca-dev.np-0000191.npause1.bakerhughes.com
+    http:
+      paths:
+      - path: /fastlca-svc-v2(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-fastlca-svc-v2
+            port:
+              number: 80
+
