@@ -28,11 +28,6 @@ More details here: https://curl.se/docs/sslcerts.html
 https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.6/deploy/static/provider/baremetal/deploy.yaml
 
 
-
-
-
-
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -98,7 +93,3 @@ spec:
             name: argocd-server
             port:
               name: https
-
-
- 
-
