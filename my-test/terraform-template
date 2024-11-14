@@ -1,0 +1,13 @@
+terraform it is IAC tool that wite code we can define and manage infrastructure 
+
+you can describe desired infra in config files like tfstate it can be stored in s3 bucket  
+
+resourece aws-instance "server1" {
+
+       ami = "ami-id"
+       instance_type= "t2.micro"
+       subnet_id= 
+       tags=
+}
+
+output
