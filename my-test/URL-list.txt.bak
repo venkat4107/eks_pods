@@ -1,137 +1,12 @@
-https://bakerhughes-my.sharepoint.com/personal/nishant_shrivastava_bakerhughes_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fnishant%5Fshrivastava%5Fbakerhughes%5Fcom%2FDocuments%2FRecordings&OR=Teams%2DHL&CT=1641973122452¶ms=%7B%22AppName%22%3A%22Teams%2DDesktop%22%2C%22AppVersion%22%3A%2227%2F21110108719%22%7D
-
-https://bakerhughes-my.sharepoint.com/personal/venkataramana_gurram_bakerhughes_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fvenkataramana%5Fgurram%5Fbakerhughes%5Fcom%2FDocuments%2FRecordings
-
-https://github.com/bh-ent-tech/ss_kubernetes_deployment/blob/Master/DEV/NGINX-dev/nginx-configmap.yaml -> nginx pod
-
-https://openvpn-1396596948.us-west-2.elb.amazonaws.com/?src=connect&auth-error=LOCKOUT  --> openvpn Lock out
-
-https://bakerhugheswiki.atlassian.net/wiki/spaces/IEGOQ/pages/17063605026/How+to+renew+Kubernetes+certificates  ->  RENEW K8s Certificate
-
-https://myid.bakerhughes.com/app/UserHome  -->                MY ID
-	
-https://jenkins.ops.fullstream.ai/computer/172.16.60.136/  --> JENKINS NODE
-https://github.com/bh-ent-tech/aurora-deployment-files/blob/master/devbh/Pgadmin/deployment.yaml	
-	
-https://bakerhugheswiki.atlassian.net/wiki/spaces/IEGOQ/pages/388816241998/E2C+Environment+Details -->  E2C ENV'S SERVERS/ENDPOINT LISTS
-
-	
-https://github.com/bh-ent-tech/digitalops_internal_devops_scripts/tree/master/Jenkinsjob-template  --->  JENKINS JOB CLEAN WORK SPACE TEMPLATE
-
-
-https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388813423029/How+to+install+PGADMIN+as+docker+container+on+Ubuntu+Linux --> PGadmin installation
-
-
-https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388816177226/BH+Cloud+-+App+Shell+AUTH+Issue+with+Private+Domain+URL --->
-
-	
-https://github.com/bh-ent-tech/digitalops_internal_devops_scripts/tree/master/RELOADER --> reloader
-
-https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388825579553/Argo+CD+Steps+to+Create+Local+Read-only+User --> argocd read only user creation
-
-https://github.com/bh-ent-tech/ofe_meta_files/tree/master/REDIS-INSIGHT --> redis insight setup in k8's
 
 https://bakerhugheswiki.atlassian.net/wiki/spaces/BHD/pages/388824858694/Argo+CD+Setup+in+Kubernetes --> argocd set up in k8 cluster
 https://argo-cd.readthedocs.io/en/stable/
 https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd
 https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
 https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/
-
-
 https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
 
-
-
-
-	
-	***E2C URLS***
-   ====================
-https://e2c-ngix-dev01.eic.fullstream.ai/#/login/ --> E2C DEV URL 
  
-https://keycloak-ngix-dev01.eic.fullstream.ai/auth/  --> E2C DEV KEYCLOAK
-
-e2c-dev-postgres.caohklckcyzl.us-west-2.rds.amazonaws.com --> e2c-dev-postgres
-
-//e2c-dev-postgres.caohklckcyzl.us-west-2.rds.amazonaws.com:5432/
-
-https://e2c-nginx-qa01.eic.fullstream.ai/#    ---> E2C QA URL 
-
-e2c-qa.caohklckcyzl.us-west-2.rds.amazonaws.com:5432/orchestrationqa
-
-https://keycloak-ngix-qa01.eic.fullstream.ai/auth
-
-
-https://e2c-fat01-nginx.eic.fullstream.ai/#  --> E2C FAT URL
-
-https://e2c-nginx-fat.eic.fullstream.ai/auth/realms/IQUITY/  --> keycloak - fat
-
-
-
-	***IMO 2020 URLS***
-   ===================
-https://lifespan-uat-app.cde.fullstream.ai/login --> IMO 2020 UAT 
-
-
-https://login-dev.bakerhughes.com/
-
-
-regname: imodocker.np-0000158.npause1.bakerhughes.com
-Uname: dockeruser
-pass: imo2020BHr3gP8x
-
-
-k8api endpointk8api-NLB-094398820482-41e1d5f2b19f5bec.elb.us-east-1.amazonaws.com
-
-
-git hub https://github.com/bh-oic
-bh-oic
-GitHub is where bh-oic builds software.
-
- 
-
-
-
-
-e2c-fat.caohklckcyzl.us-west-2.rds.amazonaws.com
-
-https://795770151185.dkr.ecr.us-west-2.amazonaws.com
-
-
-
-
-
-
-
-
-
-
-
-https://github.com/bh-ent-tech/ss_kubernetes_deployment/blob/Master/DEV/bh-user-mgmt-service/Jenkinsfile --> CD jenkins template
-
-
-https://jenkins.ops.fullstream.ai/job/MTC_Jobs/job/RDC/job/RDC_UAT/job/rdc-mindmap-app-CD/ --> CD job for RDC
-
-
-https://openvpn-1396596948.us-west-2.elb.amazonaws.com/?src=connect --> open vpn download url
-
-
-https://github.com/bh-ent-tech/ss_kubernetes_deployment/tree/Master/DEV/bh-user-mgmt-service -->  JenkinsFile
-
-
-https://github.com/bh-ent-tech/bh-user-mgmt-service/blob/master/Jenkinsfile --> Jenkinsfile
-
-
-https://github.com/bh-ent-tech/quad-template/blob/develop/Jenkinsfile --> Jenkinsfile
-
-
-http://sc.ge.com/%2aAWSEntLogin --> AWS GE login/
-
-
-https://e2c-pgadmin-elb-821757689.us-west-2.elb.amazonaws.com/pgadmin4/login?next=%2Fpgadmin4%2Fbrowser%2F  --> pglink for adding DB details
-
-
-BH_Digital_Downtime_Notification@bakerhughes.com  --> DL Baker Hughes Downtime_Notification 
-
 
 location /test {
 default_type text/plain;
@@ -153,18 +28,9 @@ httpd_can_network_connect
 =================================
  
  kubectl create configmap postgres-config --from-env-file=postgresDB.properties --> other than yaml file
- 
- 
 export KUBECONFIG=/etc/kubernetes/admin.conf  --> command for unauthorized in k8's master
-
-
-
 kubectl cp Baker\ Hughes default/dep-keycloak-svc-85f57f5d9f-kcxkv:/opt/jboss/keycloak/themes --> e2c keycloak theme
-
-
 kubectl get pod dep-pipeline-manager-service-86cdcc95bc-4d9g5 -o yaml
-
-
 
 
 **** NGINX-COMMANDS for troubleshooting****
@@ -447,12 +313,6 @@ spec:
 
 
 /dev/nvme0n1p1  (this ebs volume in linux server)
-
-
-
-
-
-
 
 
 
