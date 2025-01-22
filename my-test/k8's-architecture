@@ -1,30 +1,17 @@
-difference b/w sed and awk
-
 "sed" it is stream editor it provides text processing and text substitution by command 
- 
 "awk" it is text processing and based on pattern matching 
 
-
 k8's Architecture
-
 control Plane(master node): overall state state of cluster, scheduling 
 ==========================
-
 kube-api server : it is exposes the k8's API it is  frontend for k8"s control plane all communication happens b/w diff components (like nodes, control plane,
 and user requests) 
-
 kube-controller :  it is responsible for ensuring cluster desired state it asks kube -scheduler in which node pod should be launched
-
 kube-scheduler: it is responsible for placing pods on available worker nodes based on resource like cpu and memory
-
 etcd : it is distributed key-value store where all cluster data is stored (config,state,metadata)
-
 
 worker nodes:
 ==============
-
 kubelet: it is agent will run on each node. it ensures the containers are running in desired state. it communicates with the control plane.
-
 kube-proxy: it manages network connectivity and load balancing for services. it ensure network traffic correctly directed to pods
-
 container runtime: this software responsible for containerized application (ex: docker, containerd)
